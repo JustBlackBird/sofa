@@ -1,0 +1,15 @@
+sites:
+    stackoverflow: ~
+    # Here sites based on stackoverflow.com domain can be listed. Ex:
+    # stackoverflow
+    #     - ru
+    #     - pt
+    #     - meta
+    stackexchange: ~
+    # Here sites based on stackexchange.com domain can be luisted. Ex:
+    # stackexchange:
+    #    - english
+
+auth:
+    email: ''
+    password: ''

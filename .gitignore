@@ -1,0 +1,4 @@
+.idea
+configs/config.yml
+node_modules
+dist
