@@ -40,9 +40,9 @@ export default class {
      * @returns {Promise}
      */
     connect(email, password) {
-        let em = new EventEmitter();
+        const em = new EventEmitter();
 
-        let done = new Promise((resolve, reject) => {
+        const done = new Promise((resolve, reject) => {
             em.once('ready', () => {
                 this._isReady = true;
                 resolve(this);
@@ -64,13 +64,14 @@ export default class {
             })
             .then(this._validateStatus)
             .then(() => {
-                let handler = () => {
+                const handler = () => {
                     this._page.off('onLoadFinished', handler)
                         .then(() => {
                             return this._page.property('content');
                         })
                         .then(content => {
-                            let $ = cheerio.load(content);
+                            const $ = cheerio.load(content);
+
                             if ($('a.profile-me').length === 0) {
                                 return Promise.reject(new Error('Cannot login.'));
                             }
@@ -88,11 +89,15 @@ export default class {
                 return this._page.on('onLoadFinished', handler);
             })
             .then(() => {
-                return this._page.evaluate((email, password) => {
+                return this._page.evaluate((userEmail, userPass) => {
+                    /* eslint-disable */
+
                     // Fill and submit the login form.
-                    $('#email').val(email);
-                    $('#password').val(password);
+                    $('#email').val(userEmail);
+                    $('#password').val(userPass);
                     $('#login-form').submit();
+
+                    /* eslint-enable */
                 }, email, password);
             })
             .catch(error => {
@@ -181,4 +186,4 @@ export default class {
         this._page.close();
         this._phantom.exit();
     }
-};
+}

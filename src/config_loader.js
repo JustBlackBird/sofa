@@ -27,8 +27,8 @@ export default class {
      * @private
      */
     _readFile(path) {
-        return new Promise(function(resolve, reject) {
-            fs.readFile(path, function(err, data) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, (err, data) => {
                 if (err) {
                     return reject(err);
                 }
@@ -47,7 +47,7 @@ export default class {
      * @private
      */
     _parseData(data) {
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve) => {
             // On error loadSafe method will throw an error which be processed
             // by promises automatically.
             resolve(ymlParser.safeLoad(data));
@@ -71,19 +71,21 @@ export default class {
             }
 
             if (data.sites.hasOwnProperty('stackoverflow')) {
-                let soSites = data.sites.stackoverflow;
+                const soSites = data.sites.stackoverflow;
                 if (soSites !== null && !Array.isArray(soSites)) {
                     return Promise.reject(new Error(
-                        '"sites.stackoverflow" value of the config file can be either null or an array.'
+                        '"sites.stackoverflow" value of the config file can be '
+                            + 'either null or an array.'
                     ));
                 }
             }
 
             if (data.sites.hasOwnProperty('stackexchange')) {
-                let seSites = data.sites.stackexchange;
+                const seSites = data.sites.stackexchange;
                 if (seSites !== null && !Array.isArray(seSites)) {
                     return Promise.reject(new Error(
-                        '"sites.stackexchange" value of the config file can be either null or an array.'
+                        '"sites.stackexchange" value of the config file can be '
+                            + 'either null or an array.'
                     ));
                 }
             }
@@ -119,21 +121,18 @@ export default class {
      * @private
      */
     _addDefaults(data) {
-        if (!data.sites) {
-            data.sites = {
-                stackoverflow: null,
-                stackexchange: null
-            };
+        const result = Object.assign({}, {
+            sites: {},
+        }, data);
+
+        if (!result.sites.stackoverflow) {
+            result.sites.stackoverflow = [];
         }
 
-        if (!data.sites.stackoverflow) {
-            data.sites.stackoverflow = [];
+        if (!result.sites.stackexchange) {
+            result.sites.stackexchange = [];
         }
 
-        if (!data.sites.stackexchange) {
-            data.sites.stackexchange = [];
-        }
-
-        return Promise.resolve(data);
+        return Promise.resolve(result);
     }
-};
+}

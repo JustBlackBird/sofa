@@ -3,8 +3,8 @@ import TaskRunner from './task_runner';
 import path from 'path';
 import SiteVisitor from './site_visitor';
 
-let loader = new ConfigLoader();
-let visitor = new SiteVisitor();
+const loader = new ConfigLoader();
+const visitor = new SiteVisitor();
 let config = null;
 
 loader.load(path.join(__dirname, '../configs/config.yml'))
@@ -14,16 +14,16 @@ loader.load(path.join(__dirname, '../configs/config.yml'))
         return visitor.connect(conf.auth.email, conf.auth.password);
     })
     .then(() => {
-        let sites = ['https://stackoverflow.com'].concat(
+        const sites = ['https://stackoverflow.com'].concat(
             config.sites.stackoverflow.map(site => {
-                return 'https://' + site + '.stackoverflow.com';
+                return `https://${site}.stackoverflow.com`;
             }),
-            config.sites.stackexchange.map(site =>{
-                return 'https://' + site + '.stackexchange.com';
+            config.sites.stackexchange.map(site => {
+                return `https://${site}.stackexchange.com`;
             })
         );
 
-        let taskRunner = new TaskRunner(() => {
+        const taskRunner = new TaskRunner(() => {
             visitor.visit(sites);
         }, 24 * 60 * 60);
 
