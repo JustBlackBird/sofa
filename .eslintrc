@@ -4,7 +4,6 @@
     "indent": ["error", 4],
     "no-console": "off",
     "no-underscore-dangle": ["error", {"allowAfterThis": true}],
-    "arrow-body-style": "off",
-    "consistent-return": "off"
+    "arrow-body-style": "off"
   }
 }

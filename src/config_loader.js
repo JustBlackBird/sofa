@@ -30,10 +30,10 @@ export default class {
         return new Promise((resolve, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) {
-                    return reject(err);
+                    reject(err);
+                } else {
+                    resolve(data);
                 }
-
-                resolve(data);
             });
         });
     }
