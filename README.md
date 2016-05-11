@@ -11,7 +11,7 @@ Sofa uses [Phantom.js](http://phantomjs.org/) so you have to install it first if
 3. Build the sources using `npm run build`
 4. Copy `configs/default_config.yml` to `configs/config.yml` and fill it with
 your own values.
-5. Run the application using `node dist/app.js`
+5. Run the application using `node dist/index.js`
 
 
 ## Start with the system

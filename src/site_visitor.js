@@ -7,7 +7,15 @@ import cheerio from 'cheerio';
  * A class which is responsible for Stack Overflow visiting.
  */
 export default class {
-    constructor() {
+    constructor(logger) {
+        /**
+         * An instance of winston.js logger.
+         *
+         * @type {Object}
+         * @private
+         */
+        this._logger = logger;
+
         /**
          * An instance of Phantom.js.
          *
@@ -44,10 +52,12 @@ export default class {
 
         const done = new Promise((resolve, reject) => {
             em.once('ready', () => {
+                this._logger.info('[Site visitor] Site visitor is logged into SO.');
                 this._isReady = true;
                 resolve(this);
             });
             em.once('error', (error) => {
+                this._logger.info('[Site visitor] Cannot log in.');
                 this._cleanup();
                 reject(error);
             });
@@ -156,7 +166,10 @@ export default class {
      */
     _go(target) {
         return this._page.open(target)
-            .then(this._validateStatus);
+            .then(this._validateStatus)
+            .then(() => {
+                this._logger.info(`[Site visitor] ${target} site is visited.`);
+            });
     }
 
     /**
