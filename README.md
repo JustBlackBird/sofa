@@ -4,6 +4,8 @@ A simple utility that helps you earn [Stack Overflow](http://stackoverflow.com) 
 
 ## Installation
 
+Sofa uses [Phantom.js](http://phantomjs.org/) so you have to install it first if you did not do it before.
+
 1. Get sources. You can use `git clone`, download button or any other method.
 2. Install dependencies using `npm install`.
 3. Build the sources using `npm run build`
