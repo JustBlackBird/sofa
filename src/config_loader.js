@@ -122,7 +122,7 @@ export default class {
      */
     _addDefaults(data) {
         const result = Object.assign({}, {
-            sites: {},
+            sites: {}
         }, data);
 
         if (!result.sites.stackoverflow) {

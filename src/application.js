@@ -154,8 +154,8 @@ export default class {
             this._logger = new winston.Logger({
                 transports: [
                     // Make sure the timestamp is included into the log
-                    new winston.transports.Console({ timestamp: true }),
-                ],
+                    new winston.transports.Console({ timestamp: true })
+                ]
             });
         }
 
