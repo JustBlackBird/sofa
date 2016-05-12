@@ -120,7 +120,7 @@ export default class {
     /**
      * Visits Stack Overflow related sites (incl. Stack Exchange network).
      *
-     * @param Array sites List of URLs that should be visited.
+     * @param {Array} sites List of URLs that should be visited.
      * @returns {Promise}
      */
     visit(sites) {
