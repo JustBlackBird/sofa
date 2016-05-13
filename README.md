@@ -17,7 +17,15 @@ your own values.
 ## Start with the system
 
 You may want to run the application automatically with the system. There are
-many ways of doing so and all of the are outside of this short guide.
+many ways of doing so.
+
+For example, one can use [PM2](https://github.com/Unitech/pm2) utility. Just install it, configure to automatic
+startup and run the following in the console:
+
+```shell
+pm2 start dist/index.js --name="sofa"
+pm2 save
+```
 
 ## License
 
