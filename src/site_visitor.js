@@ -133,6 +133,13 @@ export default class {
                 return Promise.all(sites.map(target => {
                     return this._go(target);
                 }));
+            }).then(() => {
+                return new Promise(resolve => {
+                    // Wait for a while to give a change to JS on page become completed.
+                    setTimeout(() => {
+                        resolve();
+                    }, 1000 * 60);
+                });
             })
             .catch(error => {
                 this._cleanup();
