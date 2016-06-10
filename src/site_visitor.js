@@ -128,20 +128,19 @@ export default class {
             return Promise.reject('You have to connect the visitor first!');
         }
 
-        return Promise.resolve()
-            .then(() => {
-                return Promise.all(sites.map(target => {
-                    return this._go(target);
-                }));
-            }).then(() => {
-                return new Promise(resolve => {
-                    // Wait for a while to give a change to JS on page become completed.
-                    setTimeout(() => {
-                        resolve();
-                    }, 1000 * 60);
-                });
-            })
-            .catch(error => {
+        // Process all sites squently.
+        const visitSites = sites.reduce((p, target) => {
+            return p.then(() => {
+                // Each promise must be created only when a previous one is
+                // resolved.
+                return this._visitTarget(target);
+            });
+        }, Promise.resolve());
+
+        return visitSites
+            .then(data => {
+                console.log(data.length);
+            }).catch(error => {
                 this._cleanup();
 
                 return Promise.reject(error);
@@ -174,9 +173,31 @@ export default class {
     _go(target) {
         return this._page.open(target)
             .then(this._validateStatus)
+            // Wait for the page contents. It's an easy way to ensure the page
+            // is fully loaded.
             .then(() => {
-                this._logger.info(`[Site visitor] ${target} site is visited.`);
+                return this._page.property('content');
             });
+    }
+
+    /**
+     * Visits a site from StackExchange network.
+     *
+     * This method encapsulates all site visiting logic.
+     *
+     * @param {String} target URL of the page, the browser should go to.
+     * @returns {Promise}
+     * @private
+     */
+    _visitTarget(target) {
+        return this._go(target).then(() => {
+            return new Promise(resolve => {
+                // Wait for a while to give a change to JS on page become completed.
+                setTimeout(resolve, 1000 * 60);
+            });
+        }).then(() => {
+            this._logger.info(`[Site visitor] ${target} site is visited.`);
+        });
     }
 
     /**
