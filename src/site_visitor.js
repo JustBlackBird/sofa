@@ -74,6 +74,9 @@ export default class {
             })
             .then(this._validateStatus)
             .then(() => {
+                // This magic with event handler is needed only for catching
+                // redirect after form submit.
+                // TODO: Try to use POST instead of form fields filling.
                 const handler = () => {
                     this._page.off('onLoadFinished', handler)
                         .then(() => {
