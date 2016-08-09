@@ -178,11 +178,11 @@ export default class {
             })
         );
 
-        // Visit all target sites 6 times a day. In this we're sure the visit
+        // Visit all target sites 12 times a day. In this we're sure the visit
         // will be counted by SO.
         this._taskRunner = new TaskRunner(() => {
             this._siteVisitor.visit(sites);
-        }, 4 * 60 * 60);
+        }, 2 * 60 * 60);
 
         return this._taskRunner.start();
     }
